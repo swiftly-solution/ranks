@@ -45,6 +45,24 @@
 - After installing the plugin, you should change the default prefix from `addons/swiftly/translations/translation.ranks.json` (optional)
 - To change the value of the points, edit `addons/swiftly/configs/plugins/ranks.json` after the first start of the plugin.
 
+### Ranks Exports 🛠️
+
+The following exports are available:
+
+|     Name    |    Arguments    |                            Description                            |
+|:-----------:|:---------------:|:-----------------------------------------------------------------:|
+|   FetchStatistics  | playerid | Returns the statistics of a player  |
+
+### Ranks Commands 💬
+
+* Base commands provided by this plugin:
+
+|      Command     |        Flag       |               Description              |
+|:----------------:|:-----------------:|:--------------------------------------:|
+|     !lvl    |       NONE     |        Ranks Menu.        |
+|   !lvl_admin   |       z     |    Ranks Admin Menu.   |
+|   !lvl_reset | z/CONSOLE | Reset Statistics |
+
 ### Creating A Pull Request 😃
 
 1. Fork the Project
