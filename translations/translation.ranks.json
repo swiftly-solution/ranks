@@ -1,0 +1,162 @@
+{
+    "menu.yes": {
+        "en": "Yes",
+        "ro": "Da"
+    },
+    "menu.no": {
+        "en": "No",
+        "ro": "Nu"
+    },
+    "menu.resetall.confirm": {
+        "en": "Are you sure you want to reset all the stats?",
+        "ro": "Are you sure you want to reset all the stats?"
+    },
+    "menu.resetexp.confirm": {
+        "en": "Are you sure you want to reset the exp stats?",
+        "ro": "Are you sure you want to reset the exp stats?"
+    },
+    "menu.resetkda.confirm": {
+        "en": "Are you sure you want to reset the K/D/A stats?",
+        "ro": "Are you sure you want to reset the K/D/A stats?"
+    },
+    "menu.resetall": {
+        "en": "Reset All Stats",
+        "ro": "Resetează Toate Stats-urile"
+    },
+    "menu.resetexp": {
+        "en": "Reset Exp.",
+        "ro": "Resetează Exp."
+    },
+    "menu.resetkda": {
+        "en": "Reset K/D/A",
+        "ro": "Resetează K/D/A"
+    },
+    "menu.goback": {
+        "en": "Go back in the Main Menu",
+        "ro": "Înapoi în Meniul Principal"
+    },
+    "menu.reset.title": {
+        "en": "Reset Stats Menu",
+        "ro": "Resetează statisticile"
+    },
+    "menu.admin.title": {
+        "en": "Ranks - Admin Menu",
+        "ro": "Ranks - Meniu Administrativ"
+    },
+    "menu.main.title": {
+        "en": "Ranks Menu",
+        "ro": "Meniu Ranks"
+    },
+    "menu.showstats.title": {
+        "en": "Display your stats",
+        "ro": "Afișează-ți statisticile"
+    },
+    "menu.showrank.title": {
+        "en": "Display your rank",
+        "ro": "Afișează-ți rank-ul"
+    },
+    "menu.showallranks.title": {
+        "en": "Display all the ranks",
+        "ro": "Afișează rank-urile"
+    },
+    "menu.top.title": {
+        "en": "TOP Menu",
+        "ro": "Meniu TOP"
+    },
+    "menu.topexp.title": {
+        "en": "Display the top (by EXP)",
+        "ro": "Afișează top (după EXP)"
+    },
+    "menu.topkills.title": {
+        "en": "Display the top (by Kills)",
+        "ro": "Afișează top (după Kill-uri)"
+    },
+    "menu.topkdr.title": {
+        "en": "Display the top (by KDR)",
+        "ro": "Afișează top (după KDR)"
+    },
+    "menu.resetsettings.title": {
+        "en": "Reload the settings",
+        "ro": "Reîncarcă setări"
+    },
+    "no_access": {
+        "en": "You don't have access to use this command.",
+        "ro": "Nu ai acces să folosești această comandă."
+    },
+    "addpointsmessage": {
+        "en": "Your exp: {GREEN}{EXP}{DEFAULT} [{GREEN}+ {POINTS} for {CASE}{DEFAULT}]",
+        "ro": "Exp. ta: {GREEN}{EXP}{DEFAULT} [{GREEN}+ {POINTS} pentru {CASE}{DEFAULT}]"
+    },
+    "removepointsmessage": {
+        "en": "Your exp: {LIGHTRED}{EXP}{DEFAULT} [{LIGHTRED}- {POINTS} for {CASE}{DEFAULT}]",
+        "ro": "Exp. ta: {LIGHTRED}{EXP}{DEFAULT} [{LIGHTRED}- {POINTS} pentru {CASE}{DEFAULT}]"
+    },
+    "headshot": {
+        "en": "headshot",
+        "ro": "headshot"
+    },
+    "kill": {
+        "en": "kill",
+        "ro": "ucidere"
+    },
+    "assist": {
+        "en": "assist",
+        "ro": "asist"
+    },
+    "death": {
+        "en": "death",
+        "ro": "moarte"
+    },
+    "noscope": {
+        "en": "noscope",
+        "ro": "noscope"
+    },
+    "bombdrop": {
+        "en": "dropping the bomb",
+        "ro": "aruncarea bombei"
+    },
+    "bombpickup": {
+        "en": "picking up the bomb",
+        "ro": "luarea bombei"
+    },
+    "statsmessage": {
+        "en": "You have {RED}{POINTS}{DEFAULT} points and are currently {RED}{RANK}{DEFAULT}\u2029 {PREFIX} {RED}{KILLS} {DEFAULT}kills\u2029 {PREFIX} {RED}{DEATHS} {DEFAULT}deaths\u2029 {PREFIX} {RED}{ASSISTS} {DEFAULT}assists\u2029 {PREFIX} {DEFAULT}and your ratio is: {RED}{RATIO}",
+        "ro": "You have {RED}{POINTS}{DEFAULT} points and are currently {RED}{RANK}{DEFAULT}\u2029 {PREFIX} {RED}{KILLS} {DEFAULT}kills\u2029 {PREFIX} {RED}{DEATHS} {DEFAULT}deaths\u2029 {PREFIX} {RED}{ASSISTS} {DEFAULT}assists\u2029 {PREFIX} {DEFAULT}and your ratio is: {RED}{RATIO}"
+    },
+    "ranksmessage": {
+        "en": "{RED}{NAME}'s Rank {DEFAULT}\u2029 {LINEBREAKER} {DEFAULT}You have {RED} {POINTS} points {DEFAULT}and are currently {RANK} ({RED}{PLACE}{DEFAULT}/{RED}{MAXPLACE}{DEFAULT}) \u2029 {LINEBREAKER} {DEFAULT}Points until next rank: {REMAININGPOINTS}",
+        "ro": "{RED}{NAME}'s Rank {DEFAULT}\u2029 {LINEBREAKER} {DEFAULT}You have {RED}{POINTS} points {DEFAULT}and are currently {RANK} ({RED}{PLACE}{DEFAULT}/{RED}{MAXPLACE}{DEFAULT}) \u2029 {LINEBREAKER} {DEFAULT}Points until next rank: {REMAININGPOINTS}"
+    },
+    "topexpmessage": {
+        "en": "{POSITION}. {GRAY}[{RANK}]{DEFAULT} {LIGHTBLUE}{NAME} {DEFAULT}-  {RED}{EXPERIENCE} {DEFAULT}points",
+        "ro": "{POSITION}. {GRAY}[{RANK}]{DEFAULT} {LIGHTBLUE}{NAME} {DEFAULT}- {RED}{EXPERIENCE} {DEFAULT}points"
+    },
+    "topkillsmessage": {
+        "en": "{POSITION}. {GRAY}[{RANK}]{DEFAULT} {LIGHTBLUE}{NAME} {DEFAULT}-  {RED}{KILLS} {DEFAULT}kills",
+        "ro": "{POSITION}. {GRAY}[{RANK}]{DEFAULT} {LIGHTBLUE}{NAME} {DEFAULT}- {RED}{KILLS} {DEFAULT}kills"
+    },
+    "reloaded": {
+        "en": "The config and the translations have been reloaded",
+        "ro": "The config and the translations have been reloaded"
+    },
+    "reset.all": {
+        "en": "All the data have been succesfully reset.",
+        "ro": "Toate datele au fost resetate cu succes."
+    },
+    "reset.exp": {
+        "en": "All the experiences have been succesfully reset.",
+        "ro": "Toată experiența a fost resetată cu succes."
+    },
+    "reset.stats": {
+        "en": "All the statistics have been succesfully reset.",
+        "ro": "Toate statisticile au fost resetate cu succes."
+    },
+    "promote": {
+        "en": "You've been promoted to {GREEN}{RANK}{DEFAULT}.",
+        "ro": "Ai fost promovat la {GREEN}{RANK}{DEFAULT}."
+    },
+    "demote": {
+        "en": "You've been demoted to {GREEN}{RANK}{DEFAULT}.",
+        "ro": "Ai fost retrogradat la {GREEN}{RANK}{DEFAULT}."
+    }
+}
