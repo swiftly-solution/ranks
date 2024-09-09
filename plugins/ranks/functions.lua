@@ -7,6 +7,7 @@ function IncrementPlayerPoints(player, category, pointsToIncrement)
     if not db:IsConnected() then return end
     if not player then return end
     if player:IsFakeClient() then return end
+    if not player:IsValid() then return end
 
     local params = {
         steamid = tostring(player:GetSteamID()),
@@ -23,9 +24,8 @@ function IncrementPlayerPoints(player, category, pointsToIncrement)
         params[category] = params[category] + pointsToIncrement
     end
 
-    db:QueryParams(
-        "insert into `ranks` (steamid, points, kills, name, deaths, assists) values ('@steamid', @points, @kills, '@name', @deaths, @assists) on duplicate key update @category = @category + @incrementPoints",
-        params)
+    db:QueryParams("insert ignore into `ranks` (steamid, points, kills, name, deaths, assists) values ('@steamid', 0, 0, '@name', 0, 0)", params)
+    db:QueryParams("update `ranks` set @category = @category + @incrementPoints where steamid = '@steamid' limit 1", params)
 
     player:SetVar("ranks." .. category, FetchPlayer(player, category) + pointsToIncrement)
 

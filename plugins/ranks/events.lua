@@ -34,7 +34,8 @@ AddEventHandler("OnPluginStart", function(event)
             LEM = 3000,
             SMFC = 3250,
             Global = 3500,
-        }
+        },
+        linebreaker = "---"
     })
 
     Ranks = {

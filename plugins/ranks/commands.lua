@@ -42,7 +42,6 @@ commands:Register("rank", function(playerid, args, argc, silent)
 
     local points = FetchPlayer(player, "points")
     local rank = GetRankFromPlayer(player)
-    print(rank)
 
     if rank <= 18 then
         ReplyToCommand(playerid, config:Fetch("ranks.prefix"),
