@@ -55,7 +55,7 @@ function SetupPlayerRank(player)
     for i = #Ranks, 1, -1 do
         if points >= Ranks[i][3] then
             playerRanks[player:GetSlot()] = i
-            TriggerEvent("OnRankUpdate", player:GetSlot(), i, Ranks[i][1], Ranks[i][2], Ranks[i][3], Ranks[i][4])
+            TriggerEvent("OnRankUpdate", player:GetSlot(), i, Ranks[i][1], Ranks[i][2], Ranks[i][3], Ranks[i][4], points)
             break
         end
     end
