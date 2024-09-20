@@ -80,6 +80,15 @@ AddEventHandler("OnPlayerConnectFull", function(event)
     LoadPlayerData(player)
 end)
 
+AddEventHandler("OnClientDisconnect", function(event, playerid)
+    local player = GetPlayer(playerid)
+    if not player then return end
+    if player:IsFakeClient() then return end
+
+    SavePlayerData(player)
+    return EventResult.Continue
+end)
+
 AddEventHandler("OnPlayerDeath", function(event)
     local playerid = event:GetInt("userid")
     local attackerid = event:GetInt("attacker")
@@ -177,4 +186,13 @@ AddEventHandler("OnAllPluginsLoaded", function(event)
     end
 
     return EventResult.Continue
+end)
+
+SetTimer(60000, function ()
+    for i=1,playermanager:GetPlayerCap() do
+        local player = GetPlayer(i-1)
+        if player and player:IsValid() then
+            SavePlayerData(player)
+        end
+    end
 end)

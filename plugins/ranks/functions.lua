@@ -24,9 +24,6 @@ function IncrementPlayerPoints(player, category, pointsToIncrement)
         params[category] = params[category] + pointsToIncrement
     end
 
-    db:QueryParams("insert ignore into `ranks` (steamid, points, kills, name, deaths, assists) values ('@steamid', 0, 0, '@name', 0, 0)", params)
-    db:QueryParams("update `ranks` set @category = @category + @incrementPoints where steamid = '@steamid' limit 1", params)
-
     player:SetVar("ranks." .. category, FetchPlayer(player, category) + pointsToIncrement)
 
     if category == "points" then
@@ -40,6 +37,22 @@ function IncrementPlayerPoints(player, category, pointsToIncrement)
                 FetchTranslation("ranks.demote"):gsub("{RANK}", Ranks[playerRanks[player:GetSlot()]][4]))
         end
     end
+end
+
+--- @param player Player
+function SavePlayerData(player)
+    if not db:IsConnected() then return end
+
+    db:QueryParams(
+        "update `ranks` set points = @points, kills = @kills, deaths = @deaths, assists = @assists where steamid = '@steamid' limit 1",
+        {
+            points = player:GetVar("ranks.points"),
+            kills = player:GetVar("ranks.kills"),
+            deaths = player:GetVar("ranks.deaths"),
+            assists = player:GetVar("ranks.assists"),
+            steamid = player:GetSteamID()
+        }
+    )
 end
 
 --- @param player Player
@@ -80,6 +93,7 @@ end
 function LoadPlayerData(player)
     if not db:IsConnected() then return end
 
+    db:QueryParams("insert ignore into `ranks` (steamid, points, kills, name, deaths, assists) values ('@steamid', 0, 0, '@name', 0, 0)", { steamid = player:GetSteamID(), name = player:CBasePlayerController().PlayerName })
     db:QueryParams("select * from ranks where steamid = '@steamid' limit 1", { steamid = player:GetSteamID() },
         function(err, result)
             if #err > 0 then
