@@ -72,8 +72,7 @@ AddEventHandler("OnPluginStart", function(event)
     end
 end)
 
-AddEventHandler("OnPlayerConnectFull", function(event)
-    local playerid = event:GetInt("userid")
+AddEventHandler("OnClientConnect", function(event, playerid)
     local player = GetPlayer(playerid)
     if not player then return end
 
