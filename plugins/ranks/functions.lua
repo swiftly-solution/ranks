@@ -9,21 +9,6 @@ function IncrementPlayerPoints(player, category, pointsToIncrement)
     if player:IsFakeClient() then return end
     if not player:IsValid() then return end
 
-    local params = {
-        steamid = tostring(player:GetSteamID()),
-        name = player:CBasePlayerController().PlayerName,
-        points = 0,
-        kills = 0,
-        deaths = 0,
-        assists = 0,
-        category = category,
-        incrementPoints = pointsToIncrement
-    }
-
-    if params[category] then
-        params[category] = params[category] + pointsToIncrement
-    end
-
     player:SetVar("ranks." .. category, FetchPlayer(player, category) + pointsToIncrement)
 
     if category == "points" then
@@ -42,16 +27,24 @@ end
 --- @param player Player
 function SavePlayerData(player)
     if not db:IsConnected() then return end
+    if player:IsFakeClient() then return end
+
+    local params = {
+        points = player:GetVar("ranks.points"),
+        kills = player:GetVar("ranks.kills"),
+        deaths = player:GetVar("ranks.deaths"),
+        assists = player:GetVar("ranks.assists"),
+        name = player:CBasePlayerController().PlayerName,
+        steamid = player:GetSteamID()
+    }
 
     db:QueryParams(
-        "update `ranks` set points = @points, kills = @kills, deaths = @deaths, assists = @assists where steamid = '@steamid' limit 1",
-        {
-            points = player:GetVar("ranks.points"),
-            kills = player:GetVar("ranks.kills"),
-            deaths = player:GetVar("ranks.deaths"),
-            assists = player:GetVar("ranks.assists"),
-            steamid = player:GetSteamID()
-        }
+        "insert ignore into `ranks` (points, kills, deaths, assists, steamid, name) values (@points, @kills, @deaths, @assists, '@steamid', '@name')",
+        params
+    )
+    db:QueryParams(
+        "update `ranks` set points = @points, kills = @kills, deaths = @deaths, assists = @assists, name = '@name' where steamid = '@steamid' limit 1",
+        params
     )
 end
 
@@ -93,7 +86,6 @@ end
 function LoadPlayerData(player)
     if not db:IsConnected() then return end
 
-    db:QueryParams("insert ignore into `ranks` (steamid, points, kills, name, deaths, assists) values ('@steamid', 0, 0, '@name', 0, 0)", { steamid = player:GetSteamID(), name = player:CBasePlayerController().PlayerName })
     db:QueryParams("select * from ranks where steamid = '@steamid' limit 1", { steamid = player:GetSteamID() },
         function(err, result)
             if #err > 0 then
