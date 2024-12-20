@@ -35,17 +35,14 @@ function SavePlayerData(player)
         deaths = player:GetVar("ranks.deaths"),
         assists = player:GetVar("ranks.assists"),
         name = player:CBasePlayerController().PlayerName,
-        steamid = player:GetSteamID()
+        steamid = tostring(player:GetSteamID())
     }
 
-    db:QueryParams(
-        "insert ignore into `ranks` (points, kills, deaths, assists, steamid, name) values (@points, @kills, @deaths, @assists, '@steamid', '@name')",
-        params
-    )
-    db:QueryParams(
-        "update `ranks` set points = @points, kills = @kills, deaths = @deaths, assists = @assists, name = '@name' where steamid = '@steamid' limit 1",
-        params
-    )
+    db:QueryBuilder():Table("ranks"):Insert(params):OnDuplicate(params):Execute(function (err, result)
+        if #err > 0 then
+            print("ERROR!: " .. err)
+        end
+    end)
 end
 
 --- @param player Player
@@ -86,8 +83,7 @@ end
 function LoadPlayerData(player)
     if not db:IsConnected() then return end
 
-    db:QueryParams("select * from ranks where steamid = '@steamid' limit 1", { steamid = player:GetSteamID() },
-        function(err, result)
+    db:QueryBuilder():Table("ranks"):Select({}):Where("steamid", "=", tostring(player:GetSteamID())):Limit(1):Execute(function (err, result)
             if #err > 0 then
                 print("ERROR: " .. err)
                 return

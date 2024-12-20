@@ -84,7 +84,8 @@ commands:Register("topexp", function(playerid, args, argc, silent)
     local player = GetPlayer(playerid)
     if not player then return end
 
-    db:Query(string.format("SELECT name, points FROM `ranks` ORDER BY points DESC LIMIT 10"), function(err, result)
+    db:QueryBuilder():Table("ranks"):Select({"name", "points"}):OrderBy({ points = "DESC" }):Limit(10):Execute(function (err, result)
+
         if #err > 0 then
             print("{RED}: ERROR: " .. err)
             return
@@ -111,7 +112,7 @@ commands:Register("topkills", function(playerid, args, argc, silent)
     local player = GetPlayer(playerid)
     if not player then return end
 
-    db:Query(string.format("SELECT name, kills, points FROM `ranks` ORDER BY kills DESC LIMIT 10"), function(err, result)
+    db:QueryBuilder():Table("ranks"):Select({"name", "kills", "points"}):OrderBy({ kills = "DESC" }):Limit(10):Execute(function (err, result)
         if #err > 0 then
             print("{RED}: ERROR: " .. err)
             return
@@ -201,7 +202,8 @@ end)
 
 local resetFunctions = {
     all = function(playerid)
-        db:Query("UPDATE `ranks` SET points = 0, kills = 0, deaths = 0, assists = 0", function(err, result)
+        db:QueryBuilder():Table("ranks"):Update({points = 0, kills = 0, deaths = 0, assists = 0}):Execute(function (err, result)
+
             for i = 1, playermanager:GetPlayerCap() do
                 local player = GetPlayer(i - 1)
                 if player then
@@ -219,7 +221,7 @@ local resetFunctions = {
         ReplyToCommand(playerid, config:Fetch("ranks.prefix"), FetchTranslation("ranks.reset.all"))
     end,
     exp = function(playerid)
-        db:Query("UPDATE `ranks` SET points = 0", function(err, result)
+        db:QueryBuilder():Table("ranks"):Update({points = 0}):Execute(function (err, result)
             for i = 1, playermanager:GetPlayerCap() do
                 local player = GetPlayer(i - 1)
                 if player then
@@ -234,7 +236,7 @@ local resetFunctions = {
         ReplyToCommand(playerid, config:Fetch("ranks.prefix"), FetchTranslation("ranks.reset.exp"))
     end,
     stats = function(playerid)
-        db:Query("UPDATE `ranks` SET kills = 0, deaths = 0, assists = 0", function(err, result)
+        db:QueryBuilder():Table("ranks"):Update({points = 0, kills = 0, deaths = 0, assists = 0}):Execute(function (err, result)
             for i = 1, playermanager:GetPlayerCap() do
                 local player = GetPlayer(i - 1)
                 if player then

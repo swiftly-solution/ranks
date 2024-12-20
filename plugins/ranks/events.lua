@@ -1,8 +1,18 @@
 AddEventHandler("OnPluginStart", function(event)
     db = Database("swiftly_ranks")
 
-    db:Query(
-        "CREATE TABLE IF NOT EXISTS `ranks` (`steamid` varchar(128) NOT NULL, `points` int(11) NOT NULL DEFAULT 0, `kills` int(11) NOT NULL DEFAULT 0, `name` varchar(128) NOT NULL, `deaths` int(11) NOT NULL DEFAULT 0, `assists` int(11) NOT NULL DEFAULT 0, UNIQUE (`steamid`)) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;")
+    db:QueryBuilder():Table("ranks"):Create({
+		steamid = "string|max:128|unique",
+		name = "string|max:128",
+		points = "integer",
+		kills = "integer",
+		deaths = "integer",
+		assists = "integer",
+	}):Execute(function (err, result)
+        if #err > 0 then
+            print("ERROR: " .. err)
+        end
+    end)
 
     config:Create("ranks", {
         prefix = "[{lime}Swiftly{default}]",
