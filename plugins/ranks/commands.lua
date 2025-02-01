@@ -84,26 +84,47 @@ commands:Register("topexp", function(playerid, args, argc, silent)
     local player = GetPlayer(playerid)
     if not player then return end
 
-    db:QueryBuilder():Table("ranks"):Select({"name", "points"}):OrderBy({ points = "DESC" }):Limit(10):Execute(function (err, result)
-
-        if #err > 0 then
-            print("{RED}: ERROR: " .. err)
-            return
-        end
-        for i = 1, #result do
-            if type(result[i]) == "table" then
-                local name = result[i]["name"]
-                local points = tonumber(result[i]["points"] or 0)
-                local rank = CalculateRankByPoints(points)
-
-                ReplyToCommand(playerid, config:Fetch("ranks.prefix"),
-                    FetchTranslation("ranks.topexpmessage"):gsub("{POSITION}", i):gsub("{NAME}", name):gsub(
-                        "{EXPERIENCE}", points):gsub("{RANK}", Ranks[rank][4]))
+    if config:Fetch("ranks.UseLevelsRanksStructure") then
+        db:QueryBuilder():Table("ranks"):Select({"name", "value"}):OrderBy({ value = "DESC" }):Limit(10):Execute(function(err, result)
+            if #err > 0 then
+                print("{RED}: ERROR: " .. err)
+                return
             end
-        end
-        player:HideMenu()
-    end)
+
+            for i = 1, #result do
+                if type(result[i]) == "table" then
+                    local name = result[i]["name"]
+                    local points = tonumber(result[i]["value"] or 0)
+                    local rank = CalculateRankByPoints(points)
+
+                    ReplyToCommand(playerid, config:Fetch("ranks.prefix"), FetchTranslation("ranks.topexpmessage"):gsub("{POSITION}", i):gsub("{NAME}", name):gsub("{EXPERIENCE}", points):gsub("{RANK}", Ranks[rank][4]))
+                end
+            end
+
+            player:HideMenu()
+        end)
+    else
+        db:QueryBuilder():Table("ranks"):Select({"name", "points"}):OrderBy({ points = "DESC" }):Limit(10):Execute(function(err, result)
+            if #err > 0 then
+                print("{RED}: ERROR: " .. err)
+                return
+            end
+
+            for i = 1, #result do
+                if type(result[i]) == "table" then
+                    local name = result[i]["name"]
+                    local points = tonumber(result[i]["points"] or 0)
+                    local rank = CalculateRankByPoints(points)
+
+                    ReplyToCommand(playerid, config:Fetch("ranks.prefix"),FetchTranslation("ranks.topexpmessage"):gsub("{POSITION}", i):gsub("{NAME}", name):gsub("{EXPERIENCE}", points):gsub("{RANK}", Ranks[rank][4]))
+                end
+            end
+
+            player:HideMenu()
+        end)
+    end
 end)
+
 
 
 commands:Register("topkills", function(playerid, args, argc, silent)
@@ -112,26 +133,49 @@ commands:Register("topkills", function(playerid, args, argc, silent)
     local player = GetPlayer(playerid)
     if not player then return end
 
-    db:QueryBuilder():Table("ranks"):Select({"name", "kills", "points"}):OrderBy({ kills = "DESC" }):Limit(10):Execute(function (err, result)
-        if #err > 0 then
-            print("{RED}: ERROR: " .. err)
-            return
-        end
-        for i = 1, #result do
-            if type(result[i]) == "table" then
-                local name = result[i]["name"]
-                local points = result[i]["points"]
-                local kills = tonumber(result[i]["kills"] or 0)
-                local rank = CalculateRankByPoints(points)
-
-                ReplyToCommand(playerid, config:Fetch("ranks.prefix"),
-                    FetchTranslation("ranks.topkillsmessage"):gsub("{POSITION}", i):gsub("{NAME}", name):gsub("{KILLS}",
-                        kills):gsub("{RANK}", Ranks[rank][4]))
+    if config:Fetch("ranks.UseLevelsRanksStructure") then
+        db:QueryBuilder():Table("ranks"):Select({"name", "kills", "value"}):OrderBy({ kills = "DESC" }):Limit(10):Execute(function(err, result)
+            if #err > 0 then
+                print("{RED}: ERROR: " .. err)
+                return
             end
-        end
-        player:HideMenu()
-    end)
+
+            for i = 1, #result do
+                if type(result[i]) == "table" then
+                    local name = result[i]["name"]
+                    local points = tonumber(result[i]["value"] or 0)
+                    local kills = tonumber(result[i]["kills"] or 0)
+                    local rank = CalculateRankByPoints(points)
+
+                    ReplyToCommand(playerid, config:Fetch("ranks.prefix"),FetchTranslation("ranks.topkillsmessage"):gsub("{POSITION}", i):gsub("{NAME}", name):gsub("{KILLS}", kills):gsub("{RANK}", Ranks[rank][4]))
+                end
+            end
+
+            player:HideMenu()
+        end)
+    else
+        db:QueryBuilder():Table("ranks"):Select({"name", "kills", "points"}):OrderBy({ kills = "DESC" }):Limit(10):Execute(function(err, result)
+            if #err > 0 then
+                print("{RED}: ERROR: " .. err)
+                return
+            end
+
+            for i = 1, #result do
+                if type(result[i]) == "table" then
+                    local name = result[i]["name"]
+                    local kills = tonumber(result[i]["kills"] or 0)
+                    local points = tonumber(result[i]["points"] or 0)
+                    local rank = CalculateRankByPoints(points)
+
+                    ReplyToCommand(playerid, config:Fetch("ranks.prefix"),FetchTranslation("ranks.topkillsmessage"):gsub("{POSITION}", i):gsub("{NAME}", name):gsub("{KILLS}", kills):gsub("{RANK}", Ranks[rank][4]))
+                end
+            end
+
+            player:HideMenu()
+        end)
+    end
 end)
+
 
 commands:Register("lvl_reload", function(playerid, args, argc, silent)
     if not db:IsConnected() then return end
@@ -202,7 +246,7 @@ end)
 
 local resetFunctions = {
     all = function(playerid)
-        db:QueryBuilder():Table("ranks"):Update({points = 0, kills = 0, deaths = 0, assists = 0}):Execute(function (err, result)
+            db:QueryBuilder():Table("ranks"):Update({points = 0, kills = 0, deaths = 0, assists = 0}):Execute(function (err, result)
 
             for i = 1, playermanager:GetPlayerCap() do
                 local player = GetPlayer(i - 1)

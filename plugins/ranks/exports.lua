@@ -10,3 +10,11 @@ export("FetchStatistics", function(playerid)
         points = FetchPlayer(player, "points")
     }
 end)
+
+export("FetchPoints", function(playerid)
+    if type(playerid) ~= "number" then playerid = tonumber(playerid) end
+    local player = GetPlayer(playerid)
+    if not player then return 0 end
+
+    return FetchPlayer(player, "points")
+end)

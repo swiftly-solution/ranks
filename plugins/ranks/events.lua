@@ -1,21 +1,45 @@
 AddEventHandler("OnPluginStart", function(event)
     db = Database("swiftly_ranks")
 
-    db:QueryBuilder():Table("ranks"):Create({
-		steamid = "string|max:128|unique",
-		name = "string|max:128",
-		points = "integer",
-		kills = "integer",
-		deaths = "integer",
-		assists = "integer",
-	}):Execute(function (err, result)
-        if #err > 0 then
-            print("ERROR: " .. err)
-        end
-    end)
+    if config:Fetch("ranks.UseLevelsRanksStructure") then
+        db:QueryBuilder():Table("ranks"):Create({
+            steam = "string|max:128|unique",
+            name = "string|max:128",
+            value = "integer",
+            rank = "integer",
+            kills = "integer",
+            deaths = "integer",
+            shoots = "integer",
+            hits = "integer",
+            headshots = "integer",
+            assists = "integer",
+            round_win = "integer",
+            round_lose = "integer",
+            playtime = "integer",
+            lastconnect = "integer"
+        }):Execute(function (err, result)
+            if #err > 0 then
+                print("ERROR: " .. err)
+            end
+        end)
+    else
+        db:QueryBuilder():Table("ranks"):Create({
+            steamid = "string|max:128|unique",
+            name = "string|max:128",
+            points = "integer",
+            kills = "integer",
+            deaths = "integer",
+            assists = "integer",
+        }):Execute(function (err, result)
+            if #err > 0 then
+                print("ERROR: " .. err)
+            end
+        end)
+    end
 
     config:Create("ranks", {
         prefix = "[{lime}Swiftly{default}]",
+        UseLevelsRanksStructure = false
         color = "32CD32",
         points = {
             headshot = 7,
@@ -118,6 +142,7 @@ AddEventHandler("OnPlayerDeath", function(event)
     if headshot and attacker then
         IncrementPlayerPoints(attacker, "points", config:Fetch("ranks.points.headshot"))
         IncrementPlayerPoints(attacker, "kills", 1)
+        IncrementPlayerPoints(attacker, "headshots", 1)
 
         attackerpoints = FetchPlayer(attacker, "points")
 
@@ -187,6 +212,14 @@ AddEventHandler("OnPlayerDeath", function(event)
             FetchTranslation("ranks.addpointsmessage"):gsub("{EXP}", assisterpoints):gsub("{POINTS}",
                 config:Fetch("ranks.points.assist")):gsub("{CASE}", FetchTranslation("ranks.assist")))
     end
+end)
+
+AddEventHandler("OnPlayerDamage", function(event, playerid, attackerid, damageinfo, inflictor, ability)
+    if config:Fetch("ranks.UseLevelsRanksStructure") then
+        local attacker = GetPlayer(attackerid)
+        IncrementPlayerPoints(attacker, "hits", 1)
+    end
+    return EventResult.Continue
 end)
 
 AddEventHandler("OnAllPluginsLoaded", function(event)
