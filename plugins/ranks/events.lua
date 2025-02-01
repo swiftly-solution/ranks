@@ -39,7 +39,7 @@ AddEventHandler("OnPluginStart", function(event)
 
     config:Create("ranks", {
         prefix = "[{lime}Swiftly{default}]",
-        UseLevelsRanksStructure = false
+        UseLevelsRanksStructure = false,
         color = "32CD32",
         points = {
             headshot = 7,
