@@ -5,18 +5,18 @@ AddEventHandler("OnPluginStart", function(event)
         db:QueryBuilder():Table("ranks"):Create({
             steam = "string|max:128|unique",
             name = "string|max:128",
-            value = "integer",
-            rank = "integer",
-            kills = "integer",
-            deaths = "integer",
-            shoots = "integer",
-            hits = "integer",
-            headshots = "integer",
-            assists = "integer",
-            round_win = "integer",
-            round_lose = "integer",
-            playtime = "integer",
-            lastconnect = "integer"
+            value = "integer|default:0",
+            rank = "integer|default:0",
+            kills = "integer|default:0",
+            deaths = "integer|default:0",
+            shoots = "integer|default:0",
+            hits = "integer|default:0",
+            headshots = "integer|default:0",
+            assists = "integer|default:0",
+            round_win = "integer|default:0",
+            round_lose = "integer|default:0",
+            playtime = "integer|default:0",
+            lastconnect = "integer|default:0"
         }):Execute(function (err, result)
             if #err > 0 then
                 print("ERROR: " .. err)
