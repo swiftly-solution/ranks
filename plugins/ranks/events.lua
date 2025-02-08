@@ -16,7 +16,7 @@ AddEventHandler("OnPluginStart", function(event)
             round_win = "integer|default:0",
             round_lose = "integer|default:0",
             playtime = "integer|default:0",
-            lastconnect = "integer|default:0"
+            lastconnect = "intege|default:0r"
         }):Execute(function (err, result)
             if #err > 0 then
                 print("ERROR: " .. err)
@@ -26,10 +26,10 @@ AddEventHandler("OnPluginStart", function(event)
         db:QueryBuilder():Table("ranks"):Create({
             steamid = "string|max:128|unique",
             name = "string|max:128",
-            points = "integer",
-            kills = "integer",
-            deaths = "integer",
-            assists = "integer",
+            points = "integer|default:0",
+            kills = "integer|default:0",
+            deaths = "integer|default:0",
+            assists = "integer|default:0",
         }):Execute(function (err, result)
             if #err > 0 then
                 print("ERROR: " .. err)
@@ -106,11 +106,19 @@ AddEventHandler("OnPluginStart", function(event)
     end
 end)
 
-AddEventHandler("OnClientConnect", function(event, playerid)
+AddEventHandler("OnPostPlayerTeam", function (event)
+    local playerid = event:GetInt("userid")
+    local oldTeam = event:GetInt("oldteam")
+
+    if oldTeam ~= Team.None then
+        return EventResult.Continue
+    end
+
     local player = GetPlayer(playerid)
-    if not player then return end
+    if not player then return EventResult.Continue end
 
     LoadPlayerData(player)
+    return EventResult.Continue
 end)
 
 AddEventHandler("OnClientDisconnect", function(event, playerid)
