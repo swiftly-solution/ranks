@@ -16,7 +16,7 @@ AddEventHandler("OnPluginStart", function(event)
             round_win = "integer|default:0",
             round_lose = "integer|default:0",
             playtime = "integer|default:0",
-            lastconnect = "intege|default:0r"
+            lastconnect = "integer|default:0"
         }):Execute(function (err, result)
             if #err > 0 then
                 print("ERROR: " .. err)
