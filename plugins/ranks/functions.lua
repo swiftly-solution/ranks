@@ -12,15 +12,17 @@ function IncrementPlayerPoints(player, category, pointsToIncrement)
     player:SetVar("ranks." .. category, FetchPlayer(player, category) + pointsToIncrement)
 
     if category == "points" then
-        local oldrank = playerRanks[player:GetSlot()]
         SetupPlayerRank(player)
-        if playerRanks[player:GetSlot()] > oldrank then
-            ReplyToCommand(player:GetSlot(), config:Fetch("ranks.prefix"),
-                FetchTranslation("ranks.promote"):gsub("{RANK}", Ranks[playerRanks[player:GetSlot()]][4]))
-        elseif playerRanks[player:GetSlot()] < oldrank then
-            ReplyToCommand(player:GetSlot(), config:Fetch("ranks.prefix"),
-                FetchTranslation("ranks.demote"):gsub("{RANK}", Ranks[playerRanks[player:GetSlot()]][4]))
-        end
+        if playerRanks[player:GetSlot()] ~= nil then
+            local oldrank = playerRanks[player:GetSlot()]
+            if playerRanks[player:GetSlot()] > oldrank then
+                ReplyToCommand(player:GetSlot(), config:Fetch("ranks.prefix"),
+                    FetchTranslation("ranks.promote"):gsub("{RANK}", Ranks[playerRanks[player:GetSlot()]][4]))
+            elseif playerRanks[player:GetSlot()] < oldrank then
+                ReplyToCommand(player:GetSlot(), config:Fetch("ranks.prefix"),
+                    FetchTranslation("ranks.demote"):gsub("{RANK}", Ranks[playerRanks[player:GetSlot()]][4]))
+            end
+        end 
     end
 end
 
